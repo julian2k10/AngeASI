@@ -1,0 +1,23 @@
+#djvulibre
+# conda install pytorch torchvision torchaudio pytorch-cuda=11.8 -c pytorch -c nvidia
+docker~=7.1.0
+spacy~=3.8.2
+datasets~=3.4.1
+pyarrow~=19.0.1
+sklearn-pandas
+regex~=2024.11.6
+pathlib~=1.0.1
+numpy~=2.2.4
+requests~=2.32.3
+pdfplumber~=0.11.6
+lxml~=5.3.1
+pillow~=11.1.0
+torchvision~=0.20.1
+transformers~=4.50.0
+pandas~=2.2.3
+nltk~=3.9.1
+pyodbc~=5.2.0
+scikit-learn~=1.6.1
+pytest~=8.3.5
+pymongo~=4.11
+keyring~=25.6.0
