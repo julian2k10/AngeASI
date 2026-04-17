@@ -6,9 +6,9 @@ import unicodedata
 from functools import wraps
 from collections import Counter, defaultdict
 from typing import List, Set, Optional, Tuple, Dict, Any, FrozenSet, Counter as CounterType
-from asi.context_aware_io import get_affix_by_length, get_hash_key, load_json_file, save_json_file, STORAGE_DIR
-from asi.morpheme_extractor import filter_affixes
-from asi.utility import (
+from context_aware_io import get_affix_by_length, get_hash_key, load_json_file, save_json_file, STORAGE_DIR
+from morpheme_extractor import filter_affixes
+from utility import (
     CACHE_DIR, LATIN_GREEK_ROOTS_CACHE, check_cache_validity, find_files_by_pattern, delete_files_from_list,
 )
 

@@ -14,7 +14,6 @@ dependencies:
   - matplotlib
   - spacy
   - nltk
-  - blake3
   - beautifulsoup4
   - lxml
   - requests
@@ -27,6 +26,8 @@ dependencies:
       - torchaudio
       - tensorflow
       - paddlenlp
+      - ddgs
+      - blake3
       - easyocr
       - pymupdf
       - pdfplumber

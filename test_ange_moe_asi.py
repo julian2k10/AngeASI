@@ -43,7 +43,7 @@ os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
 
 def expand_module_vocab(extra_texts: list) -> int:
     """
-    Expand the vocabulary in *asi.ange_moe_asi* in-place so that all words
+    Expand the vocabulary in *ange_moe_asi* in-place so that all words
     found in *extra_texts* become known tokens.  Updates the module's
     TOKEN_TO_ID, ID_TO_TOKEN, VOCAB, VOCAB_SIZE globals.
     Returns the new vocab size.
@@ -1562,7 +1562,7 @@ class TestSecureEncoderDecoderMoE(unittest.TestCase):
 
         logger.info("test_kv_cache_sequence_isolation_with_attention_scores passed ✓")
 
-    @patch('asi.ange_moe_asi.SecureEncoderDecoderMoE.forward')
+    @patch('ange_moe_asi.SecureEncoderDecoderMoE.forward')
     def test_generate_logic(self, mock_forward):
         logger.info("Testing generate logic...")
 
