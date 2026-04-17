@@ -8,8 +8,8 @@ import regex as re
 from collections import defaultdict, Counter, deque
 from functools import wraps
 from typing import List, Tuple, Set, Optional, Dict, Iterable
-from asi.context_aware_io import load_json_file, save_json_file
-from asi.morpheme_extractor import extract_productive_affixes
+from context_aware_io import load_json_file, save_json_file
+from morpheme_extractor import extract_productive_affixes
 from morpho_rules import apply_rules, discover_orth_rules, CompiledRules
 
 # --- Logging Configuration ---
@@ -1178,7 +1178,7 @@ class MorphSegmenterICA:
         """
         try:
             start = time.time()
-            rules = discover_orth_rules(self.lookup_dict, self.all_suffixes, self.lang_code)
+            rules = discover_orth_rules(self.lookup_dict, self.prod_suffixes, self.lang_code)
             self._compiled_rules = rules
             logger.info(
                 f"Built CompiledRules with {len(self._compiled_rules.suffix_rules)} suffix rules "
@@ -2453,6 +2453,11 @@ if __name__ == '__main__':
     _prefixes = set(load_json_file(ENG_PREFIXES_FILE))
     _suffixes = set(load_json_file(ENG_SUFFIXES_FILE))
     combining_forms = set(load_json_file(f"{lang_code}_{C_FORMS_FILE_NAME}"))
+    msg = f"{len(_prefixes)} prefixes & {len(_suffixes)} suffixes & {len(combining_forms)} combining forms"
+    if _prefixes and _suffixes and combining_forms:
+        print(f"Loaded {msg}.")
+    else:
+        print(f"Warning: prefixes\suffixes\combining forms not available. Found: {msg}.")
 
     segmenter = MorphSegmenterICA(lang_code, lang_group, lookup_dict, _prefixes, _suffixes, combining_forms)
 

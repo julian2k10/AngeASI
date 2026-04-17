@@ -20,7 +20,7 @@ import time
 from collections import Counter
 from typing import List, Tuple, Set
 
-from asi.morpho_rules import (
+from morpho_rules import (
     classify_alphabet,
     compile_rules,
     apply_rules,
@@ -40,35 +40,9 @@ from asi.morpho_rules import (
 )
 
 # ═════════════════════════════════════════════════════════════════════════════
-# §8  Reference ENG_RULES (validation target)
-# ═════════════════════════════════════════════════════════════════════════════
-
-ENG_RULES_REFERENCE: List[Tuple[str, List[str]]] = [
-    (r"([bcdfghjklmnprstvwxz])t",   [r"\1te"]),       # 1.  t → te
-    (r"([bcdfghjklmnprstvwxz])k",   [r"\1ke"]),       # 2.  k → ke
-    (r"([bcdfghjklmnprstvwxz])v",   [r"\1ve"]),       # 3.  v → ve
-    (r"([bcdfghjklmnprstvwxz])s",   [r"\1se"]),       # 4.  s → se
-    (r"([bcdfghjklmnprstvwxz])z",   [r"\1ze"]),       # 5.  z → ze
-    (r"([bcdfghjklmnprstvwxz])c",   [r"\1ce"]),       # 6.  c → ce
-    (r"([bcdfghjklmnprstvwxz])g",   [r"\1ge"]),       # 7.  g → ge
-    (r"([bcdfghjklmnprstvwxz])p",   [r"\1pe"]),       # 8.  p → pe
-    (r"([bcdfghjklmnprstvwxz])d",   [r"\1de"]),       # 9.  d → de
-    (r"([bcdfghjklmnprstvwxz])m",   [r"\1me"]),       # 10. m → me
-    (r"([bcdfghjklmnprstvwxz])r",   [r"\1re"]),       # 11. r → re
-    (r"([bcdfghjklmnprstvwxz])b",   [r"\1be"]),       # 12. b → be
-    (r"([bcdfghjklmnprstvwxz])f",   [r"\1fe"]),       # 13. f → fe
-    (r"([bcdfghjklmnprstvwxz])l",   [r"\1le"]),       # 14. l → le
-    (r"([bcdfghjklmnprstvwxz])n",   [r"\1ne"]),       # 15. n → ne
-    (r"([bcdfghjklmnprstvwxz])\1",  [r"\1"]),         # 16. CC → C (gemination)
-    (r"i$",                         ["y"]),            # 17. i → y (semivowel)
-    (r"ick$",                       ["ic"]),           # 18. ck → c (digraph)
-]
-
-# ═════════════════════════════════════════════════════════════════════════════
-# Test cases for apply_rules — every ENG_RULES_REFERENCE pattern covered
+# Test cases for apply_rules — every 'eng' pattern discovered
 #
 # Format: (stem_after_suffix_strip, expected_base, description)
-# Each ENG_RULES_REFERENCE pattern has at least 2-3 test cases.
 # ═════════════════════════════════════════════════════════════════════════════
 
 ENGLISH_TEST_CASES = [
@@ -223,7 +197,7 @@ def test_english_coverage():
     print("  Test Cases")
     print(f"{'─' * 72}")
 
-    # Track coverage per ENG_RULES_REFERENCE pattern
+    # Track coverage per 'eng' rule pattern
     pattern_labels = [
         "t→te", "k→ke", "v→ve", "s→se", "z→ze", "c→ce", "g→ge",
         "p→pe", "d→de", "m→me", "r→re", "b→be", "f→fe", "l→le",
@@ -252,8 +226,8 @@ def test_english_coverage():
     print(f"  Results: {passed}/{passed + failed} passed  ({pct:.0f}%)")
     print(f"{'═' * 72}")
 
-    # ── Verify all ENG_RULES_REFERENCE patterns have passing tests ──
-    print(f"\n  ENG_RULES_REFERENCE pattern coverage:")
+    # ── Verify all ENGLISH_TEST_CASES have passing tests ──
+    print(f"\n  English rules pattern coverage:")
     all_covered = True
     for label in pattern_labels:
         covered = pattern_tested[label]
@@ -815,7 +789,7 @@ def test_build_restoration_trie():
     print("  build_restoration_trie / module-level _RESTORATION_TRIE Tests")
     print("=" * 72)
 
-    import asi.morpho_rules as _mr
+    import morpho_rules as _mr
 
     restoration_dict = {
         "viru":  "virus",
@@ -936,7 +910,7 @@ def test_ensure_restoration_trie():
        returned as (True, canonical) without falling through to the
        suffix-dict loop.
     """
-    import asi.morpho_rules as _mr
+    import morpho_rules as _mr
 
     print("\n" + "=" * 72)
     print("  ensure_restoration_trie Tests")

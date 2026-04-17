@@ -40,7 +40,7 @@ from typing import (
     Any, Counter as CounterType, Dict, FrozenSet, List,
     Optional, Set, Tuple,
 )
-from asi.context_aware_io import load_json_file, save_json_file
+from context_aware_io import load_json_file, save_json_file
 
 logging.basicConfig(
     format="%(asctime)s | %(levelname)s | %(name)s | %(message)s",
@@ -203,13 +203,14 @@ def _cc(chars: Set[str]) -> str:
 
 def discover_suffixes(words: Set[str], min_freq: int = 40, max_len: int = 7) -> Set[str]:
     """Frequency-based: S is a suffix if many words end in S with stem ∈ dict."""
+    logger.info(f"Discovering suffixes from {len(words)} words with min_freq={min_freq}, max_len={max_len}...")
     counter: Counter = Counter()
     for w in words:
         wlen = len(w)
         for slen in range(1, min(max_len + 1, wlen - 1)):
             if wlen - slen >= 2 and w[:-slen] in words:
                 counter[w[-slen:]] += 1
-    return {s for s, c in counter.most_common() if c >= min_freq}
+    return {s for s, c in counter.items() if c >= min_freq}
 
 
 # ═════════════════════════════════════════════════════════════════════════════
@@ -361,6 +362,8 @@ def discover_alternation_rules(
     if suffixes is None:
         suffixes = discover_suffixes(words)
 
+    logger.info(f"Discovering rules using {len(suffixes)} suffixes, min_evidence={min_evidence}, "
+                f"max_suffix={max_suffix_count}...")
     sorted_sfx = sorted(suffixes, key=lambda s: (-len(s), s))[:max_suffix_count]
 
     # ── Build suffix → word-list index ──
@@ -388,9 +391,8 @@ def discover_alternation_rules(
         slen = len(sfx)
         for w in sfx_words[sfx]:
             stem = w[:-slen]
-            stem_in_dict = stem in words
 
-            if stem_in_dict:
+            if stem in words:
                 # Even when stem is in dict, check for structural patterns
                 # (gemination, digraph) where BOTH surface and restored exist.
                 # This handles large dictionaries with variant spellings.

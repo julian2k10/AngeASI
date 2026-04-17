@@ -65,6 +65,8 @@ from collections import Counter, defaultdict
 from typing import Counter as CounterType, FrozenSet, Optional, Set, List, Tuple, Dict, Iterable
 import logging
 
+from context_aware_io import load_json_file
+
 logging.basicConfig(
     format="%(asctime)s | %(levelname)s | %(name)s | %(message)s",
     datefmt="%Y-%m-%d %H:%M:%S",
