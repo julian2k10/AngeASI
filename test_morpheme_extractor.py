@@ -19,7 +19,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from morpheme_extractor import (
     filter_affixes, extract_productive_affixes, _extract_testing_data, logger
 )
-from asi.context_aware_io import save_json_file, load_json_file
+from context_aware_io import save_json_file, load_json_file
 
 PRODUCTIVE_PREFIXES = [
     # Productive/Negative

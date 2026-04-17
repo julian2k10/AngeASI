@@ -34,8 +34,8 @@ import unittest
 from collections import Counter
 from typing import Dict, List, Set, Tuple
 
-from asi.ange_tokenizer import SemanticTokenizer
-from asi.context_aware_io import load_json_file, save_json_file
+from ange_tokenizer import SemanticTokenizer
+from context_aware_io import load_json_file, save_json_file
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, BASE_DIR)
@@ -43,7 +43,7 @@ sys.path.insert(0, BASE_DIR)
 from root_extractor import (
     _extract_morpheme_frequencies,
     _filter_affix_duplicates,
-    extract_productive_roots, _promote_neoclassical_bound_roots,
+    extract_productive_roots,
 )
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -876,19 +876,6 @@ class Test07_NeoclassicalBoundRootPromotion(unittest.TestCase):
                                f"Promoted root '{root}' has zero morpheme frequency")
 
     # ── trie algorithm unit tests (synthetic, microsecond-fast) ──────────
-
-    def _promote_neo_roots(self, words, anchor_set, prefix_roots, suffix_roots):
-        """
-        Execute one trie-scan pass (mirrors the _trie_scan helper inside
-        extract_productive_roots) and return the promoted set (count >= 2).
-        """
-        combining_forms = _promote_neoclassical_bound_roots(
-            words, self.prefix_freq, self.suffix_freq, anchor_set,
-            prefixes=self.prefixes, prefix_roots=prefix_roots,
-            suffixes=self.suffixes, suffix_roots=suffix_roots,
-            free_roots=self.free_roots
-        )
-        return combining_forms
 
     def test_trie_promotes_clase_synthetic(self):
         """

@@ -34,7 +34,7 @@ from pathlib import Path
 from pymongo import InsertOne, UpdateOne
 from pymongo.common import MAX_BSON_SIZE
 from pymongo.errors import WriteError
-from model.conf import (
+from conf import (
     ROOT_DIR, TAG_AND_TEXT_PATTERN, PRESERVE_ALSO_PATTERN, LANGUAGE_PATTERN,
     PRESERVE_OTHER_PATTERN, LANG_CODE_PATTERN, VALID_UNICODE_WORD, WP_LANG_CODE_PATTERN, WIKI_SECTION_PATTERN
 )
@@ -163,7 +163,7 @@ def view_xml_by_lines(filename, lines_per_chunk=50):
             input("Press Enter to view the next chunk...")
 
 def parse_bz2_xml_pages_to_db(file_name):
-    from model.util import get_local_mongodb_manager
+    from util import get_local_mongodb_manager
     database = get_local_mongodb_manager()
     try:
         database.connect()
@@ -347,7 +347,7 @@ def view_xml_by_pages(filename):
             extra_file.writelines(extra)
 
 def create_wiktionary_indexes():
-    from model.util import get_local_mongodb_manager
+    from util import get_local_mongodb_manager
     database = get_local_mongodb_manager()
     try:
         database.connect()
@@ -422,7 +422,7 @@ def select_language_ancestor(ancestor, query) -> dict:
     return ancestor
 
 def create_wiktionary_vocab_list():
-    from model.util import get_local_mongodb_manager
+    from util import get_local_mongodb_manager
     database = get_local_mongodb_manager()
     tokenizer_database = get_local_mongodb_manager("UnicodeTokenizer")
     iso_639_code_database = get_local_mongodb_manager("ISO-639_Language_Codes")
@@ -1097,7 +1097,7 @@ def save_table_to_mongodb(table_name: str, db_name: str, table: list[dict], inde
 
     :return: None
     """
-    from model.util import get_local_mongodb_manager
+    from util import get_local_mongodb_manager
     database = get_local_mongodb_manager(db_name)
     if query_keys is None:
         query_keys = []
@@ -1315,7 +1315,7 @@ def save_wiki_page_vocabulary_articles_to_db():
                 batch = []
 
 def build_wiki_vocabulary_article_pages():
-    from model.util import get_local_mongodb_manager
+    from util import get_local_mongodb_manager
 
     global results_que, total_records, logger
     wicktionary_database = get_local_mongodb_manager()
@@ -1355,7 +1355,7 @@ def build_wiki_vocabulary_article_pages():
 
 def update_tokenizer_language_database():
     """Update UnicodeTokenizer ISO 639-3 language database info"""
-    from model.util import get_local_mongodb_manager
+    from util import get_local_mongodb_manager
     database = get_local_mongodb_manager("UnicodeTokenizer")
     try:
         database.connect()

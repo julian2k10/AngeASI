@@ -7,7 +7,7 @@ from typing import List
 import numpy as np
 import  regex as re
 from collections import defaultdict, Counter
-from asi.ange_tokenizer import (
+from ange_tokenizer import (
     infer_language_bias,
     SimpleTransformerXL, SemanticTokenizer, create_tokenizer, load_word_frequencies_json,
     get_skyscraper_training_sentences, CandidateEntry, CandidateCache, UNICODE_PATTERN, STORAGE_DIR,

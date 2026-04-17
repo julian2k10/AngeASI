@@ -17,8 +17,8 @@ import random
 import regex as re
 import numpy as np
 from ddgs import DDGS
-import asi.ange_moe_asi as _ange_mod          # kept for vocab patching
-from asi.ange_moe_asi import (
+import ange_moe_asi as _ange_mod          # kept for vocab patching
+from ange_moe_asi import (
     PAD, UNK, BOS, EOS, SEP, MASK, PAD_TOKEN_ID, BOS_TOKEN_ID, EOS_TOKEN_ID, SEP_TOKEN_ID, VOCAB_SIZE, LANGUAGE_MAPPING, SEED, WORD_PATTERN,
     SPECIAL_TOKENS, ModelArgs, SecureEncoderDecoderMoE, DummyTokenizer, User, AccessLevel, Task, AdaptiveSoftmaxHead,
     TransformerBlock, WebSearchTool, TextDataset, StatefulCollator, StatefulSupervisedDataset, SimpleTranslationDataset,
@@ -2546,7 +2546,7 @@ class TestAdaptiveSoftmax(unittest.TestCase):
         With partition_size=100 and HEAD_FRACTION=0.40, the minimum head size
         is 40.  Anything below that should be rejected at construction time.
         """
-        from asi.ange_moe_asi import AdaptiveSoftmaxHead, _TOKEN_PARTITION_SIZE
+        from ange_moe_asi import AdaptiveSoftmaxHead, _TOKEN_PARTITION_SIZE
         small_partition = 100
         min_head = int(round(AdaptiveSoftmaxHead._HEAD_FRACTION * small_partition))  # 40
 
@@ -2592,7 +2592,7 @@ class TestAdaptiveSoftmax(unittest.TestCase):
         This test documents that the production ModelArgs cutoffs have been
         updated to meet the minimum head requirement.
         """
-        from asi.ange_moe_asi import AdaptiveSoftmaxHead, _TOKEN_PARTITION_SIZE, ModelArgs as MA
+        from ange_moe_asi import AdaptiveSoftmaxHead, _TOKEN_PARTITION_SIZE, ModelArgs as MA
         default_cutoffs = MA.adaptive_softmax_cutoffs  # class-level default
         if default_cutoffs is None:
             self.skipTest("adaptive_softmax_cutoffs is None — ASM disabled")
