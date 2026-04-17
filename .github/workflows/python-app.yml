@@ -1,47 +1,49 @@
 # This workflow will install Python dependencies, run tests and lint with a single version of Python
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python
 
-name: Ange ASI Integration
-
-on:
-  push:
-    branches: [ "master" ]
-  pull_request:
-    branches: [ "master" ]
+name: Run Integration Tests
+on: [push, pull_request]
 
 permissions:
   contents: read
 
 jobs:
   test:
-    runs-on: ubuntu-latest
-    # This ensures all subsequent steps run inside the conda environment
-    defaults:
-      run:
-        shell: bash -el {0}
+    runs-on: ubuntu-latest 
 
     steps:
-      - uses: actions/checkout@v4
-
-      - name: Setup Miniconda
-        uses: conda-incubator/setup-miniconda@v3
-        with:
-          auto-update-conda: true
-          python-version: "3.10"
-          activate-environment: test-env
-          # Use mamba for faster installation of heavy deps
-          use-mamba: true 
+      - name: Checkout Code
+        uses: actions/checkout@v4
 
       - name: Cache Conda env
         uses: actions/cache@v4
         with:
-          path: /usr/share/miniconda/envs/test-env
-          key: conda-${{ runner.os }}-${{ hashFiles('conda-requirements.txt') }}
-        id: cache
-      
-      - name: Install Conda Dependencies
+          path: ~/conda_pkgs_dir
+          key: ${{ runner.os }}-conda-${{ hashFiles('conda_environment.yml') }}
+
+      - name: Set up Miniforge (Conda)
+        uses: conda-incubator/setup-miniconda@v3
+        with:
+          auto-update-conda: true
+          python-version: "3.10"
+          # Points to your uploaded file
+          environment-file: conda_environment.yml
+          # Ensures the environment name matches the file (AngeAI)
+          activate-environment: AngeAI
+          # Recommended: uses Mamba for much faster dependency resolution
+          use-mamba: true
+          # Crucial for caching to work correctly
+          auto-activate-base: false
+
+      - name: Verify Environment
+        shell: bash -el {0}
         run: |
-          conda install --file conda-requirements.txt -c pytorch -c nvidia -c conda-forge
+          conda info
+          conda list
 
       - name: Run Tests
-        run: pytest
+        # 'shell: bash -el {0}' is required to keep the conda env active in this step
+        shell: bash -el {0}
+        run: |
+          pytest
+
