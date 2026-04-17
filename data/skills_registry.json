@@ -1,0 +1,1467 @@
+{
+  "_meta": {
+    "version": "1.0",
+    "created": "2024-01-15",
+    "total_skills": 187,
+    "description": "Comprehensive Skills Registry for Hierarchical MoE Transformer",
+    "task_classes": [
+      "GENERATIVE",
+      "REVERSE_GENERATIVE",
+      "DISCRIMINATIVE",
+      "SEQUENCE_LABELING",
+      "UNCLASSIFIED"
+    ]
+  },
+  "LANGUAGE_TRANSLATION": {
+    "eng_translation": {
+      "name": "English Translation",
+      "skill_id": "eng_translation",
+      "task_class": "GENERATIVE",
+      "description": "Translate any text into English",
+      "languages": [
+        "eng"
+      ],
+      "confidence": 1.0,
+      "difficulty": "medium",
+      "domain": "translation",
+      "tags": [
+        "translation",
+        "english",
+        "target-language",
+        "core"
+      ],
+      "parent_skills": [],
+      "example_prompts": [
+        "Translate this French text to English",
+        "Convert Spanish to English",
+        "What does 'Hola' mean in English?"
+      ],
+      "metadata": {
+        "script": "Latin",
+        "target_language_iso639_3": "eng"
+      }
+    },
+    "spa_translation": {
+      "name": "Spanish Translation",
+      "skill_id": "spa_translation",
+      "task_class": "GENERATIVE",
+      "description": "Translate text into Spanish",
+      "languages": [
+        "spa"
+      ],
+      "confidence": 0.95,
+      "difficulty": "medium",
+      "domain": "translation",
+      "tags": [
+        "translation",
+        "spanish",
+        "target-language"
+      ],
+      "parent_skills": [],
+      "example_prompts": [
+        "Translate to Spanish",
+        "Convert to Spanish"
+      ],
+      "metadata": {
+        "script": "Latin",
+        "target_language_iso639_3": "spa"
+      }
+    },
+    "fra_translation": {
+      "name": "French Translation",
+      "skill_id": "fra_translation",
+      "task_class": "GENERATIVE",
+      "description": "Translate text into French",
+      "languages": [
+        "fra"
+      ],
+      "confidence": 0.93,
+      "difficulty": "medium",
+      "domain": "translation",
+      "tags": [
+        "translation",
+        "french",
+        "target-language"
+      ],
+      "parent_skills": [],
+      "example_prompts": [
+        "Translate to French"
+      ],
+      "metadata": {
+        "target_language_iso639_3": "fra"
+      }
+    },
+    "deu_translation": {
+      "name": "German Translation",
+      "skill_id": "deu_translation",
+      "task_class": "GENERATIVE",
+      "description": "Translate text into German",
+      "languages": [
+        "deu"
+      ],
+      "confidence": 0.92,
+      "difficulty": "medium",
+      "domain": "translation",
+      "tags": [
+        "translation",
+        "german",
+        "target-language"
+      ],
+      "parent_skills": [],
+      "example_prompts": [
+        "Translate to German"
+      ],
+      "metadata": {
+        "target_language_iso639_3": "deu"
+      }
+    },
+    "cmn_translation": {
+      "name": "Mandarin Chinese Translation",
+      "skill_id": "cmn_translation",
+      "task_class": "GENERATIVE",
+      "description": "Translate text into Mandarin Chinese",
+      "languages": [
+        "cmn"
+      ],
+      "confidence": 0.85,
+      "difficulty": "hard",
+      "domain": "translation",
+      "tags": [
+        "translation",
+        "chinese",
+        "mandarin",
+        "target-language"
+      ],
+      "parent_skills": [],
+      "example_prompts": [
+        "Translate to Chinese"
+      ],
+      "metadata": {
+        "script": "CJK",
+        "target_language_iso639_3": "cmn"
+      }
+    },
+    "jpn_translation": {
+      "name": "Japanese Translation",
+      "skill_id": "jpn_translation",
+      "task_class": "GENERATIVE",
+      "description": "Translate text into Japanese",
+      "languages": [
+        "jpn"
+      ],
+      "confidence": 0.84,
+      "difficulty": "hard",
+      "domain": "translation",
+      "tags": [
+        "translation",
+        "japanese",
+        "target-language"
+      ],
+      "parent_skills": [],
+      "example_prompts": [
+        "Translate to Japanese"
+      ],
+      "metadata": {
+        "target_language_iso639_3": "jpn"
+      }
+    },
+    "ara_translation": {
+      "name": "Arabic Translation",
+      "skill_id": "ara_translation",
+      "task_class": "GENERATIVE",
+      "description": "Translate text into Arabic",
+      "languages": [
+        "ara"
+      ],
+      "confidence": 0.82,
+      "difficulty": "hard",
+      "domain": "translation",
+      "tags": [
+        "translation",
+        "arabic",
+        "target-language"
+      ],
+      "parent_skills": [],
+      "example_prompts": [
+        "Translate to Arabic"
+      ],
+      "metadata": {
+        "script": "Arabic",
+        "target_language_iso639_3": "ara"
+      }
+    },
+    "por_translation": {
+      "name": "Portuguese Translation",
+      "skill_id": "por_translation",
+      "task_class": "GENERATIVE",
+      "description": "Translate text into Portuguese",
+      "languages": [
+        "por"
+      ],
+      "confidence": 0.91,
+      "difficulty": "medium",
+      "domain": "translation",
+      "tags": [
+        "translation",
+        "portuguese",
+        "target-language"
+      ],
+      "parent_skills": [],
+      "example_prompts": [
+        "Translate to Portuguese"
+      ],
+      "metadata": {
+        "target_language_iso639_3": "por"
+      }
+    },
+    "rus_translation": {
+      "name": "Russian Translation",
+      "skill_id": "rus_translation",
+      "task_class": "GENERATIVE",
+      "description": "Translate text into Russian",
+      "languages": [
+        "rus"
+      ],
+      "confidence": 0.88,
+      "difficulty": "hard",
+      "domain": "translation",
+      "tags": [
+        "translation",
+        "russian",
+        "target-language"
+      ],
+      "parent_skills": [],
+      "example_prompts": [
+        "Translate to Russian"
+      ],
+      "metadata": {
+        "script": "Cyrillic",
+        "target_language_iso639_3": "rus"
+      }
+    },
+    "ita_translation": {
+      "name": "Italian Translation",
+      "skill_id": "ita_translation",
+      "task_class": "GENERATIVE",
+      "description": "Translate text into Italian",
+      "languages": [
+        "ita"
+      ],
+      "confidence": 0.9,
+      "difficulty": "medium",
+      "domain": "translation",
+      "tags": [
+        "translation",
+        "italian",
+        "target-language"
+      ],
+      "parent_skills": [],
+      "example_prompts": [
+        "Translate to Italian"
+      ],
+      "metadata": {
+        "target_language_iso639_3": "ita"
+      }
+    },
+    "kor_translation": {
+      "name": "Korean Translation",
+      "skill_id": "kor_translation",
+      "task_class": "GENERATIVE",
+      "description": "Translate text into Korean",
+      "languages": [
+        "kor"
+      ],
+      "confidence": 0.81,
+      "difficulty": "hard",
+      "domain": "translation",
+      "tags": [
+        "translation",
+        "korean",
+        "target-language"
+      ],
+      "parent_skills": [],
+      "example_prompts": [
+        "Translate to Korean"
+      ],
+      "metadata": {
+        "target_language_iso639_3": "kor"
+      }
+    },
+    "nld_translation": {
+      "name": "Dutch Translation",
+      "skill_id": "nld_translation",
+      "task_class": "GENERATIVE",
+      "description": "Translate text into Dutch",
+      "languages": [
+        "nld"
+      ],
+      "confidence": 0.89,
+      "difficulty": "medium",
+      "domain": "translation",
+      "tags": [
+        "translation",
+        "dutch",
+        "target-language"
+      ],
+      "parent_skills": [],
+      "example_prompts": [
+        "Translate to Dutch"
+      ],
+      "metadata": {
+        "target_language_iso639_3": "nld"
+      }
+    },
+    "swe_translation": {
+      "name": "Swedish Translation",
+      "skill_id": "swe_translation",
+      "task_class": "GENERATIVE",
+      "description": "Translate text into Swedish",
+      "languages": [
+        "swe"
+      ],
+      "confidence": 0.87,
+      "difficulty": "medium",
+      "domain": "translation",
+      "tags": [
+        "translation",
+        "swedish",
+        "target-language"
+      ],
+      "parent_skills": [],
+      "example_prompts": [
+        "Translate to Swedish"
+      ],
+      "metadata": {
+        "target_language_iso639_3": "swe"
+      }
+    },
+    "pol_translation": {
+      "name": "Polish Translation",
+      "skill_id": "pol_translation",
+      "task_class": "GENERATIVE",
+      "description": "Translate text into Polish",
+      "languages": [
+        "pol"
+      ],
+      "confidence": 0.86,
+      "difficulty": "medium",
+      "domain": "translation",
+      "tags": [
+        "translation",
+        "polish",
+        "target-language"
+      ],
+      "parent_skills": [],
+      "example_prompts": [
+        "Translate to Polish"
+      ],
+      "metadata": {
+        "target_language_iso639_3": "pol"
+      }
+    },
+    "hin_translation": {
+      "name": "Hindi Translation",
+      "skill_id": "hin_translation",
+      "task_class": "GENERATIVE",
+      "description": "Translate text into Hindi",
+      "languages": [
+        "hin"
+      ],
+      "confidence": 0.79,
+      "difficulty": "hard",
+      "domain": "translation",
+      "tags": [
+        "translation",
+        "hindi",
+        "target-language"
+      ],
+      "parent_skills": [],
+      "example_prompts": [
+        "Translate to Hindi"
+      ],
+      "metadata": {
+        "script": "Devanagari",
+        "target_language_iso639_3": "hin"
+      }
+    }
+  },
+  "LANGUAGE_TASKS": {
+    "grammar_check": {
+      "name": "Grammar & Spelling Check",
+      "skill_id": "grammar_check",
+      "task_class": "SEQUENCE_LABELING",
+      "description": "Identify and correct grammatical errors and spelling mistakes",
+      "languages": null,
+      "confidence": 0.87,
+      "difficulty": "medium",
+      "domain": "language",
+      "tags": [
+        "grammar",
+        "spelling",
+        "error-correction",
+        "proofreading"
+      ],
+      "parent_skills": [],
+      "example_prompts": [
+        "Check this text for grammar errors",
+        "Fix spelling mistakes",
+        "Proofread this document"
+      ],
+      "metadata": {
+        "error_types": [
+          "grammar",
+          "spelling",
+          "punctuation"
+        ]
+      }
+    },
+    "style_editing": {
+      "name": "Style Editing",
+      "skill_id": "style_editing",
+      "task_class": "GENERATIVE",
+      "description": "Improve writing style, readability, and word choice",
+      "languages": null,
+      "confidence": 0.82,
+      "difficulty": "hard",
+      "domain": "language",
+      "tags": [
+        "style",
+        "readability",
+        "word-choice",
+        "editing"
+      ],
+      "parent_skills": [],
+      "example_prompts": [
+        "Improve the style of this text",
+        "Make this more readable",
+        "Better word choice here"
+      ],
+      "metadata": {}
+    },
+    "paraphrasing": {
+      "name": "Paraphrasing",
+      "skill_id": "paraphrasing",
+      "task_class": "GENERATIVE",
+      "description": "Rewrite text while preserving meaning",
+      "languages": null,
+      "confidence": 0.85,
+      "difficulty": "medium",
+      "domain": "language",
+      "tags": [
+        "paraphrasing",
+        "rewriting",
+        "semantic-preservation"
+      ],
+      "parent_skills": [],
+      "example_prompts": [
+        "Rephrase this in different words",
+        "Paraphrase this paragraph"
+      ],
+      "metadata": {}
+    },
+    "simplification": {
+      "name": "Text Simplification",
+      "skill_id": "simplification",
+      "task_class": "GENERATIVE",
+      "description": "Make complex text easier to understand",
+      "languages": null,
+      "confidence": 0.8,
+      "difficulty": "medium",
+      "domain": "language",
+      "tags": [
+        "simplification",
+        "clarity",
+        "accessibility"
+      ],
+      "parent_skills": [],
+      "example_prompts": [
+        "Simplify this complex text",
+        "Make this easier to understand"
+      ],
+      "metadata": {}
+    },
+    "expansion": {
+      "name": "Text Expansion",
+      "skill_id": "expansion",
+      "task_class": "GENERATIVE",
+      "description": "Elaborate on brief content with more detail",
+      "languages": null,
+      "confidence": 0.78,
+      "difficulty": "medium",
+      "domain": "language",
+      "tags": [
+        "expansion",
+        "elaboration",
+        "detail"
+      ],
+      "parent_skills": [],
+      "example_prompts": [
+        "Expand this brief note",
+        "Add more details"
+      ],
+      "metadata": {}
+    },
+    "tone_adjustment": {
+      "name": "Tone Adjustment",
+      "skill_id": "tone_adjustment",
+      "task_class": "GENERATIVE",
+      "description": "Rewrite to match different tones (formal, casual, sarcastic, etc.)",
+      "languages": null,
+      "confidence": 0.83,
+      "difficulty": "hard",
+      "domain": "language",
+      "tags": [
+        "tone",
+        "formality",
+        "register"
+      ],
+      "parent_skills": [],
+      "example_prompts": [
+        "Make this more formal",
+        "Rewrite this casually",
+        "Add a sarcastic tone"
+      ],
+      "metadata": {
+        "tone_types": [
+          "formal",
+          "casual",
+          "technical",
+          "friendly",
+          "sarcastic"
+        ]
+      }
+    }
+  },
+  "CONTENT_CREATION": {
+    "blog_post_gen": {
+      "name": "Blog Post Generation",
+      "skill_id": "blog_post_gen",
+      "task_class": "GENERATIVE",
+      "description": "Create engaging blog posts on any topic",
+      "languages": null,
+      "confidence": 0.79,
+      "difficulty": "medium",
+      "domain": "writing",
+      "tags": [
+        "blog",
+        "content-creation",
+        "writing",
+        "articles"
+      ],
+      "parent_skills": [],
+      "example_prompts": [
+        "Write a blog post about AI ethics",
+        "Create an article on machine learning"
+      ],
+      "metadata": {
+        "format": "html|markdown"
+      }
+    },
+    "social_media_gen": {
+      "name": "Social Media Content Generation",
+      "skill_id": "social_media_gen",
+      "task_class": "GENERATIVE",
+      "description": "Write posts for Twitter, LinkedIn, Instagram, TikTok, Facebook",
+      "languages": null,
+      "confidence": 0.81,
+      "difficulty": "easy",
+      "domain": "writing",
+      "tags": [
+        "social-media",
+        "content",
+        "twitter",
+        "linkedin",
+        "instagram"
+      ],
+      "parent_skills": [],
+      "example_prompts": [
+        "Write a Twitter post about productivity",
+        "Create a LinkedIn post",
+        "Make an Instagram caption"
+      ],
+      "metadata": {
+        "platforms": [
+          "twitter",
+          "linkedin",
+          "instagram",
+          "tiktok",
+          "facebook"
+        ]
+      }
+    },
+    "email_draft": {
+      "name": "Email Drafting",
+      "skill_id": "email_draft",
+      "task_class": "GENERATIVE",
+      "description": "Compose professional, casual, or marketing emails",
+      "languages": null,
+      "confidence": 0.88,
+      "difficulty": "easy",
+      "domain": "writing",
+      "tags": [
+        "email",
+        "writing",
+        "communication",
+        "professional"
+      ],
+      "parent_skills": [],
+      "example_prompts": [
+        "Write a professional email",
+        "Draft a casual follow-up",
+        "Create a marketing email"
+      ],
+      "metadata": {
+        "email_type": [
+          "professional",
+          "casual",
+          "marketing",
+          "apology"
+        ]
+      }
+    },
+    "cover_letter_gen": {
+      "name": "Cover Letter Generation",
+      "skill_id": "cover_letter_gen",
+      "task_class": "GENERATIVE",
+      "description": "Write tailored cover letters for job applications",
+      "languages": null,
+      "confidence": 0.84,
+      "difficulty": "medium",
+      "domain": "writing",
+      "tags": [
+        "cover-letter",
+        "job-application",
+        "career"
+      ],
+      "parent_skills": [],
+      "example_prompts": [
+        "Write a cover letter for a data scientist role",
+        "Create a cover letter for this job posting"
+      ],
+      "metadata": {}
+    },
+    "resume_gen": {
+      "name": "Resume/CV Generation & Improvement",
+      "skill_id": "resume_gen",
+      "task_class": "GENERATIVE",
+      "description": "Create or improve resumes with impact",
+      "languages": null,
+      "confidence": 0.83,
+      "difficulty": "medium",
+      "domain": "writing",
+      "tags": [
+        "resume",
+        "cv",
+        "career",
+        "professional"
+      ],
+      "parent_skills": [],
+      "example_prompts": [
+        "Create a resume for a software engineer",
+        "Improve my resume"
+      ],
+      "metadata": {
+        "format": [
+          "ATS-friendly",
+          "modern",
+          "academic"
+        ]
+      }
+    },
+    "script_gen": {
+      "name": "Script & Screenplay Writing",
+      "skill_id": "script_gen",
+      "task_class": "GENERATIVE",
+      "description": "Write dialogue, scenes, and full scripts",
+      "languages": null,
+      "confidence": 0.76,
+      "difficulty": "hard",
+      "domain": "creative",
+      "tags": [
+        "screenplay",
+        "script",
+        "dialogue",
+        "creative-writing"
+      ],
+      "parent_skills": [],
+      "example_prompts": [
+        "Write a movie script",
+        "Create a dialogue between characters"
+      ],
+      "metadata": {
+        "format": [
+          "screenplay",
+          "play",
+          "dialogue"
+        ]
+      }
+    },
+    "poetry_gen": {
+      "name": "Poetry & Creative Writing",
+      "skill_id": "poetry_gen",
+      "task_class": "GENERATIVE",
+      "description": "Write poems, haikus, stories, narratives, fiction",
+      "languages": null,
+      "confidence": 0.76,
+      "difficulty": "hard",
+      "domain": "creative",
+      "tags": [
+        "poetry",
+        "creative-writing",
+        "haiku",
+        "fiction"
+      ],
+      "parent_skills": [],
+      "example_prompts": [
+        "Write a haiku about nature",
+        "Create a short story",
+        "Write a poem about love"
+      ],
+      "metadata": {
+        "types": [
+          "haiku",
+          "sonnet",
+          "free-verse",
+          "prose",
+          "narrative"
+        ]
+      }
+    },
+    "ad_copy_gen": {
+      "name": "Advertising Copy Generation",
+      "skill_id": "ad_copy_gen",
+      "task_class": "GENERATIVE",
+      "description": "Create compelling ads, product descriptions, taglines",
+      "languages": null,
+      "confidence": 0.8,
+      "difficulty": "medium",
+      "domain": "marketing",
+      "tags": [
+        "advertising",
+        "copywriting",
+        "marketing",
+        "product-description"
+      ],
+      "parent_skills": [],
+      "example_prompts": [
+        "Write an ad for this product",
+        "Create a catchy tagline",
+        "Write a product description"
+      ],
+      "metadata": {}
+    },
+    "doc_generation": {
+      "name": "Technical Documentation",
+      "skill_id": "doc_generation",
+      "task_class": "GENERATIVE",
+      "description": "Write how-to guides, API docs, user manuals",
+      "languages": null,
+      "confidence": 0.81,
+      "difficulty": "medium",
+      "domain": "technical",
+      "tags": [
+        "documentation",
+        "technical-writing",
+        "guides"
+      ],
+      "parent_skills": [],
+      "example_prompts": [
+        "Write API documentation",
+        "Create a how-to guide",
+        "Write a user manual"
+      ],
+      "metadata": {
+        "doc_type": [
+          "API",
+          "how-to",
+          "manual",
+          "guide"
+        ]
+      }
+    },
+    "meeting_notes": {
+      "name": "Meeting Notes & Minutes",
+      "skill_id": "meeting_notes",
+      "task_class": "GENERATIVE",
+      "description": "Summarize meetings professionally",
+      "languages": null,
+      "confidence": 0.8,
+      "difficulty": "easy",
+      "domain": "business",
+      "tags": [
+        "meeting",
+        "notes",
+        "minutes",
+        "summary"
+      ],
+      "parent_skills": [],
+      "example_prompts": [
+        "Summarize this meeting",
+        "Write meeting minutes"
+      ],
+      "metadata": {}
+    }
+  },
+  "ANALYSIS_RESEARCH": {
+    "abstractive_summ": {
+      "name": "Abstractive Summarization",
+      "skill_id": "abstractive_summ",
+      "task_class": "GENERATIVE",
+      "description": "Generate abstractive summaries",
+      "languages": null,
+      "confidence": 0.85,
+      "difficulty": "hard",
+      "domain": "summarization",
+      "tags": [
+        "summarization",
+        "abstractive",
+        "generation"
+      ],
+      "parent_skills": [],
+      "example_prompts": [
+        "Summarize this article in 2 sentences",
+        "Create a brief abstract"
+      ],
+      "metadata": {
+        "compression_ratio": "10-20%"
+      }
+    },
+    "extractive_summ": {
+      "name": "Extractive Summarization",
+      "skill_id": "extractive_summ",
+      "task_class": "DISCRIMINATIVE",
+      "description": "Extract key sentences for summary",
+      "languages": null,
+      "confidence": 0.88,
+      "difficulty": "medium",
+      "domain": "summarization",
+      "tags": [
+        "summarization",
+        "extractive",
+        "classification"
+      ],
+      "parent_skills": [],
+      "example_prompts": [
+        "Extract key sentences",
+        "Find the main points"
+      ],
+      "metadata": {
+        "compression_ratio": "30-50%"
+      }
+    },
+    "sentiment_analysis": {
+      "name": "Sentiment Analysis",
+      "skill_id": "sentiment_analysis",
+      "task_class": "DISCRIMINATIVE",
+      "description": "Analyze sentiment (positive/negative/neutral)",
+      "languages": null,
+      "confidence": 0.87,
+      "difficulty": "medium",
+      "domain": "analysis",
+      "tags": [
+        "sentiment",
+        "classification",
+        "analysis"
+      ],
+      "parent_skills": [],
+      "example_prompts": [
+        "Analyze the sentiment of this text",
+        "Is this positive or negative?"
+      ],
+      "metadata": {}
+    },
+    "text_analysis": {
+      "name": "Text Analysis",
+      "skill_id": "text_analysis",
+      "task_class": "DISCRIMINATIVE",
+      "description": "Identify themes, tone, sentiment, key points",
+      "languages": null,
+      "confidence": 0.82,
+      "difficulty": "medium",
+      "domain": "analysis",
+      "tags": [
+        "analysis",
+        "themes",
+        "tone"
+      ],
+      "parent_skills": [],
+      "example_prompts": [
+        "Analyze the themes in this text",
+        "What's the tone?"
+      ],
+      "metadata": {}
+    },
+    "comparison": {
+      "name": "Comparison & Contrast",
+      "skill_id": "comparison",
+      "task_class": "GENERATIVE",
+      "description": "Compare and contrast different texts, ideas, or approaches",
+      "languages": null,
+      "confidence": 0.81,
+      "difficulty": "medium",
+      "domain": "analysis",
+      "tags": [
+        "comparison",
+        "contrast",
+        "analysis"
+      ],
+      "parent_skills": [],
+      "example_prompts": [
+        "Compare these two approaches",
+        "What's the difference?"
+      ],
+      "metadata": {}
+    },
+    "fact_check": {
+      "name": "Fact-Checking",
+      "skill_id": "fact_check",
+      "task_class": "DISCRIMINATIVE",
+      "description": "Verify claims (may use web search)",
+      "languages": null,
+      "confidence": 0.75,
+      "difficulty": "hard",
+      "domain": "analysis",
+      "tags": [
+        "fact-checking",
+        "verification",
+        "claims"
+      ],
+      "parent_skills": [],
+      "example_prompts": [
+        "Is this claim true?",
+        "Fact-check this statement"
+      ],
+      "metadata": {
+        "uses_web_search": true
+      }
+    }
+  },
+  "CODING_TECHNICAL": {
+    "py_codegen": {
+      "name": "Python Code Generation",
+      "skill_id": "py_codegen",
+      "task_class": "GENERATIVE",
+      "description": "Generate Python code from descriptions",
+      "languages": null,
+      "confidence": 0.8,
+      "difficulty": "hard",
+      "domain": "coding",
+      "tags": [
+        "code-generation",
+        "python",
+        "programming"
+      ],
+      "parent_skills": [],
+      "example_prompts": [
+        "Write a Python function that...",
+        "Generate Python code for..."
+      ],
+      "metadata": {
+        "language": "python"
+      }
+    },
+    "js_codegen": {
+      "name": "JavaScript Code Generation",
+      "skill_id": "js_codegen",
+      "task_class": "GENERATIVE",
+      "description": "Generate JavaScript code from descriptions",
+      "languages": null,
+      "confidence": 0.78,
+      "difficulty": "hard",
+      "domain": "coding",
+      "tags": [
+        "code-generation",
+        "javascript",
+        "programming",
+        "web"
+      ],
+      "parent_skills": [],
+      "example_prompts": [
+        "Write JavaScript code for...",
+        "Generate a JS function"
+      ],
+      "metadata": {
+        "language": "javascript"
+      }
+    },
+    "code_review": {
+      "name": "Code Review & Analysis",
+      "skill_id": "code_review",
+      "task_class": "DISCRIMINATIVE",
+      "description": "Review code for quality and bugs",
+      "languages": null,
+      "confidence": 0.82,
+      "difficulty": "hard",
+      "domain": "coding",
+      "tags": [
+        "code-review",
+        "analysis",
+        "quality"
+      ],
+      "parent_skills": [],
+      "example_prompts": [
+        "Review this code",
+        "Find bugs in this code"
+      ],
+      "metadata": {}
+    },
+    "debugging": {
+      "name": "Code Debugging",
+      "skill_id": "debugging",
+      "task_class": "GENERATIVE",
+      "description": "Help identify and fix code errors",
+      "languages": null,
+      "confidence": 0.8,
+      "difficulty": "hard",
+      "domain": "coding",
+      "tags": [
+        "debugging",
+        "error-fixing",
+        "troubleshooting"
+      ],
+      "parent_skills": [],
+      "example_prompts": [
+        "Fix this bug",
+        "Why is this error happening?"
+      ],
+      "metadata": {}
+    },
+    "code_explanation": {
+      "name": "Code Explanation",
+      "skill_id": "code_explanation",
+      "task_class": "GENERATIVE",
+      "description": "Explain what code does and how it works",
+      "languages": null,
+      "confidence": 0.84,
+      "difficulty": "medium",
+      "domain": "coding",
+      "tags": [
+        "explanation",
+        "documentation",
+        "understanding"
+      ],
+      "parent_skills": [],
+      "example_prompts": [
+        "Explain this code",
+        "What does this function do?"
+      ],
+      "metadata": {}
+    },
+    "refactoring": {
+      "name": "Code Refactoring",
+      "skill_id": "refactoring",
+      "task_class": "GENERATIVE",
+      "description": "Improve code efficiency and readability",
+      "languages": null,
+      "confidence": 0.78,
+      "difficulty": "hard",
+      "domain": "coding",
+      "tags": [
+        "refactoring",
+        "optimization",
+        "readability"
+      ],
+      "parent_skills": [],
+      "example_prompts": [
+        "Refactor this code",
+        "Make this code more efficient"
+      ],
+      "metadata": {}
+    }
+  },
+  "BUSINESS_PROFESSIONAL": {
+    "business_plan": {
+      "name": "Business Plan Creation",
+      "skill_id": "business_plan",
+      "task_class": "GENERATIVE",
+      "description": "Create business plans and proposals",
+      "languages": null,
+      "confidence": 0.75,
+      "difficulty": "hard",
+      "domain": "business",
+      "tags": [
+        "business",
+        "planning",
+        "proposals"
+      ],
+      "parent_skills": [],
+      "example_prompts": [
+        "Create a business plan for...",
+        "Write a business proposal"
+      ],
+      "metadata": {}
+    },
+    "project_plan": {
+      "name": "Project Planning",
+      "skill_id": "project_plan",
+      "task_class": "GENERATIVE",
+      "description": "Develop project timelines and deliverables",
+      "languages": null,
+      "confidence": 0.78,
+      "difficulty": "medium",
+      "domain": "business",
+      "tags": [
+        "project-management",
+        "planning",
+        "timeline"
+      ],
+      "parent_skills": [],
+      "example_prompts": [
+        "Create a project plan",
+        "Develop a timeline"
+      ],
+      "metadata": {}
+    },
+    "report_gen": {
+      "name": "Report Generation",
+      "skill_id": "report_gen",
+      "task_class": "GENERATIVE",
+      "description": "Write business, financial, or analytical reports",
+      "languages": null,
+      "confidence": 0.8,
+      "difficulty": "hard",
+      "domain": "business",
+      "tags": [
+        "reporting",
+        "analysis",
+        "documentation"
+      ],
+      "parent_skills": [],
+      "example_prompts": [
+        "Generate a quarterly report",
+        "Write a financial report"
+      ],
+      "metadata": {}
+    }
+  },
+  "LANGUAGE_IDENTIFICATION": {
+    "lang_id": {
+      "name": "Language Identification",
+      "skill_id": "lang_id",
+      "task_class": "SEQUENCE_LABELING",
+      "description": "Identify language of input text",
+      "languages": null,
+      "confidence": 0.96,
+      "difficulty": "low",
+      "domain": "language",
+      "tags": [
+        "language-identification",
+        "detection"
+      ],
+      "parent_skills": [],
+      "example_prompts": [
+        "What language is this?",
+        "Identify the language"
+      ],
+      "metadata": {}
+    }
+  },
+  "CLASSIFICATION": {
+    "sensitivity_clf": {
+      "name": "Sensitivity Classification",
+      "skill_id": "sensitivity_clf",
+      "task_class": "DISCRIMINATIVE",
+      "description": "Classify content sensitivity level",
+      "languages": null,
+      "confidence": 0.92,
+      "difficulty": "medium",
+      "domain": "classification",
+      "tags": [
+        "classification",
+        "safety",
+        "content-moderation"
+      ],
+      "parent_skills": [],
+      "example_prompts": [
+        "Rate the sensitivity of this content",
+        "Is this content appropriate?"
+      ],
+      "metadata": {
+        "classes": [
+          "public",
+          "internal",
+          "confidential"
+        ]
+      }
+    },
+    "task_identification": {
+      "name": "Task Identification",
+      "skill_id": "task_identification",
+      "task_class": "DISCRIMINATIVE",
+      "description": "Identify what task the user is asking for",
+      "languages": null,
+      "confidence": 0.89,
+      "difficulty": "hard",
+      "domain": "classification",
+      "tags": [
+        "task-identification",
+        "intent",
+        "classification"
+      ],
+      "parent_skills": [],
+      "example_prompts": [
+        "What task is the user asking for?",
+        "Identify the intent"
+      ],
+      "metadata": {}
+    }
+  },
+  "SEQUENCE_LABELING": {
+    "ner": {
+      "name": "Named Entity Recognition",
+      "skill_id": "ner",
+      "task_class": "SEQUENCE_LABELING",
+      "description": "Identify named entities in text",
+      "languages": null,
+      "confidence": 0.84,
+      "difficulty": "medium",
+      "domain": "nlp",
+      "tags": [
+        "ner",
+        "entity-extraction",
+        "tagging"
+      ],
+      "parent_skills": [],
+      "example_prompts": [
+        "Find named entities",
+        "Extract person, location, organization"
+      ],
+      "metadata": {
+        "entity_types": [
+          "PERSON",
+          "LOCATION",
+          "ORGANIZATION",
+          "DATE"
+        ]
+      }
+    },
+    "pos_tagging": {
+      "name": "POS Tagging",
+      "skill_id": "pos_tagging",
+      "task_class": "SEQUENCE_LABELING",
+      "description": "Tag parts of speech",
+      "languages": null,
+      "confidence": 0.86,
+      "difficulty": "medium",
+      "domain": "nlp",
+      "tags": [
+        "pos",
+        "tagging",
+        "linguistic"
+      ],
+      "parent_skills": [],
+      "example_prompts": [
+        "Tag parts of speech",
+        "What's the POS tag?"
+      ],
+      "metadata": {}
+    }
+  },
+  "LEARNING_EDUCATION": {
+    "concept_explain": {
+      "name": "Concept Explanation",
+      "skill_id": "concept_explain",
+      "task_class": "GENERATIVE",
+      "description": "Explain any topic from simple to advanced",
+      "languages": null,
+      "confidence": 0.85,
+      "difficulty": "medium",
+      "domain": "education",
+      "tags": [
+        "explanation",
+        "tutoring",
+        "learning"
+      ],
+      "parent_skills": [],
+      "example_prompts": [
+        "Explain quantum computing",
+        "What is machine learning?"
+      ],
+      "metadata": {}
+    },
+    "study_guide": {
+      "name": "Study Guide Creation",
+      "skill_id": "study_guide",
+      "task_class": "GENERATIVE",
+      "description": "Create study materials, flashcards, review sheets",
+      "languages": null,
+      "confidence": 0.8,
+      "difficulty": "medium",
+      "domain": "education",
+      "tags": [
+        "study",
+        "educational",
+        "guides"
+      ],
+      "parent_skills": [],
+      "example_prompts": [
+        "Create a study guide for...",
+        "Make flashcards for..."
+      ],
+      "metadata": {}
+    }
+  },
+  "PERSONAL_LIFESTYLE": {
+    "goal_setting": {
+      "name": "Goal Setting",
+      "skill_id": "goal_setting",
+      "task_class": "GENERATIVE",
+      "description": "Help define and structure personal goals",
+      "languages": null,
+      "confidence": 0.75,
+      "difficulty": "medium",
+      "domain": "lifestyle",
+      "tags": [
+        "goal-setting",
+        "planning",
+        "personal"
+      ],
+      "parent_skills": [],
+      "example_prompts": [
+        "Help me set goals for...",
+        "Create a goal plan"
+      ],
+      "metadata": {}
+    },
+    "travel_planning": {
+      "name": "Travel Planning",
+      "skill_id": "travel_planning",
+      "task_class": "GENERATIVE",
+      "description": "Create itineraries and travel guides",
+      "languages": null,
+      "confidence": 0.77,
+      "difficulty": "medium",
+      "domain": "lifestyle",
+      "tags": [
+        "travel",
+        "planning",
+        "itinerary"
+      ],
+      "parent_skills": [],
+      "example_prompts": [
+        "Plan a trip to...",
+        "Create a travel itinerary"
+      ],
+      "metadata": {}
+    },
+    "recipe_gen": {
+      "name": "Recipe Generation",
+      "skill_id": "recipe_gen",
+      "task_class": "GENERATIVE",
+      "description": "Provide recipes and cooking instructions",
+      "languages": null,
+      "confidence": 0.81,
+      "difficulty": "easy",
+      "domain": "lifestyle",
+      "tags": [
+        "recipe",
+        "cooking",
+        "food"
+      ],
+      "parent_skills": [],
+      "example_prompts": [
+        "Give me a recipe for...",
+        "How do I make...?"
+      ],
+      "metadata": {}
+    }
+  },
+  "CREATIVE_BRAINSTORMING": {
+    "brainstorm_ideas": {
+      "name": "Idea Generation",
+      "skill_id": "brainstorm_ideas",
+      "task_class": "GENERATIVE",
+      "description": "Brainstorm ideas on any topic",
+      "languages": null,
+      "confidence": 0.79,
+      "difficulty": "easy",
+      "domain": "creative",
+      "tags": [
+        "brainstorming",
+        "ideation",
+        "creative"
+      ],
+      "parent_skills": [],
+      "example_prompts": [
+        "Brainstorm ideas for...",
+        "Give me creative ideas"
+      ],
+      "metadata": {}
+    },
+    "name_brainstorm": {
+      "name": "Name Brainstorming",
+      "skill_id": "name_brainstorm",
+      "task_class": "GENERATIVE",
+      "description": "Generate names for companies, products, characters",
+      "languages": null,
+      "confidence": 0.81,
+      "difficulty": "easy",
+      "domain": "creative",
+      "tags": [
+        "naming",
+        "brainstorming",
+        "creative"
+      ],
+      "parent_skills": [],
+      "example_prompts": [
+        "Suggest names for a...",
+        "Generate product names"
+      ],
+      "metadata": {}
+    }
+  },
+  "REVERSE_GENERATIVE": {
+    "reverse_clm": {
+      "name": "Reverse Language Modeling (RCLM)",
+      "skill_id": "reverse_clm",
+      "task_class": "REVERSE_GENERATIVE",
+      "description": "Right-to-left language prediction (experimental)",
+      "languages": null,
+      "confidence": 0.7,
+      "difficulty": "medium",
+      "domain": "language_modeling",
+      "tags": [
+        "reverse",
+        "language-modeling",
+        "experimental"
+      ],
+      "parent_skills": [],
+      "example_prompts": [],
+      "metadata": {
+        "experimental": true
+      }
+    }
+  },
+  "UNCLASSIFIED": {
+    "unclassified": {
+      "name": "Unclassified / Learning New Skill",
+      "skill_id": "unclassified",
+      "task_class": "UNCLASSIFIED",
+      "description": "Default for unknown or newly learned skills",
+      "languages": null,
+      "confidence": 0.5,
+      "difficulty": "unknown",
+      "domain": "general",
+      "tags": [
+        "fallback",
+        "learning",
+        "experimental"
+      ],
+      "parent_skills": [],
+      "example_prompts": [],
+      "metadata": {
+        "is_fallback": true
+      }
+    }
+  },
+  "_statistics": {
+    "generative_count": 68,
+    "discriminative_count": 20,
+    "sequence_labeling_count": 4,
+    "reverse_generative_count": 1,
+    "unclassified_count": 1,
+    "languages_supported": 16,
+    "domains_covered": 14,
+    "avg_confidence": 0.82
+  }
+}

@@ -1,0 +1,499 @@
+[
+  {
+    "pattern": "t$",
+    "restorations": [
+      "te",
+      "s",
+      "ty",
+      "ta",
+      "to",
+      "d",
+      "ti",
+      "z",
+      "tu"
+    ]
+  },
+  {
+    "pattern": "i$",
+    "restorations": [
+      "y",
+      "e",
+      "a",
+      "o",
+      "u"
+    ]
+  },
+  {
+    "pattern": "([bcdfghjklmnpqrstvwxz])\\1",
+    "restorations": [
+      "\\1"
+    ]
+  },
+  {
+    "pattern": "l$",
+    "restorations": [
+      "le",
+      "ly",
+      "r",
+      "la",
+      "lo",
+      "li",
+      "lu"
+    ]
+  },
+  {
+    "pattern": "r$",
+    "restorations": [
+      "re",
+      "ry",
+      "s",
+      "l",
+      "ra",
+      "ro",
+      "ri",
+      "ru"
+    ]
+  },
+  {
+    "pattern": "s$",
+    "restorations": [
+      "se",
+      "t",
+      "d",
+      "sy",
+      "r",
+      "k",
+      "c",
+      "so",
+      "sa",
+      "si",
+      "z"
+    ]
+  },
+  {
+    "pattern": "g$",
+    "restorations": [
+      "gy",
+      "ge",
+      "k",
+      "go",
+      "ga",
+      "gi",
+      "gu"
+    ]
+  },
+  {
+    "pattern": "n$",
+    "restorations": [
+      "ne",
+      "ny",
+      "na",
+      "no",
+      "m",
+      "ni"
+    ]
+  },
+  {
+    "pattern": "z$",
+    "restorations": [
+      "ze",
+      "s",
+      "d",
+      "t",
+      "zy",
+      "za",
+      "zo",
+      "zi"
+    ]
+  },
+  {
+    "pattern": "v$",
+    "restorations": [
+      "ve",
+      "f",
+      "b",
+      "vy",
+      "va",
+      "vo",
+      "vi"
+    ]
+  },
+  {
+    "pattern": "c$",
+    "restorations": [
+      "ce",
+      "s",
+      "k",
+      "cy",
+      "co",
+      "ca",
+      "ci",
+      "cu"
+    ]
+  },
+  {
+    "pattern": "u$",
+    "restorations": [
+      "e",
+      "o",
+      "a",
+      "y",
+      "i"
+    ]
+  },
+  {
+    "pattern": "d$",
+    "restorations": [
+      "de",
+      "s",
+      "dy",
+      "t",
+      "do",
+      "da",
+      "di",
+      "z"
+    ]
+  },
+  {
+    "pattern": "m$",
+    "restorations": [
+      "me",
+      "my",
+      "n",
+      "ma",
+      "mo",
+      "mi",
+      "mu"
+    ]
+  },
+  {
+    "pattern": "a$",
+    "restorations": [
+      "e",
+      "y",
+      "o",
+      "i",
+      "u"
+    ]
+  },
+  {
+    "pattern": "st$",
+    "restorations": [
+      "s"
+    ]
+  },
+  {
+    "pattern": "dn$",
+    "restorations": [
+      "d"
+    ]
+  },
+  {
+    "pattern": "sn$",
+    "restorations": [
+      "s"
+    ]
+  },
+  {
+    "pattern": "p$",
+    "restorations": [
+      "pe",
+      "py",
+      "pa",
+      "b",
+      "po",
+      "f",
+      "pi"
+    ]
+  },
+  {
+    "pattern": "nt$",
+    "restorations": [
+      "n"
+    ]
+  },
+  {
+    "pattern": "rs$",
+    "restorations": [
+      "r"
+    ]
+  },
+  {
+    "pattern": "k$",
+    "restorations": [
+      "ke",
+      "s",
+      "g",
+      "ky",
+      "c",
+      "ka",
+      "ko",
+      "ki",
+      "ku"
+    ]
+  },
+  {
+    "pattern": "nd$",
+    "restorations": [
+      "n"
+    ]
+  },
+  {
+    "pattern": "ln$",
+    "restorations": [
+      "l"
+    ]
+  },
+  {
+    "pattern": "b$",
+    "restorations": [
+      "be",
+      "by",
+      "p",
+      "bo",
+      "ba",
+      "v",
+      "bi",
+      "bu"
+    ]
+  },
+  {
+    "pattern": "ng$",
+    "restorations": [
+      "n"
+    ]
+  },
+  {
+    "pattern": "tl$",
+    "restorations": [
+      "t"
+    ]
+  },
+  {
+    "pattern": "rl$",
+    "restorations": [
+      "r"
+    ]
+  },
+  {
+    "pattern": "rn$",
+    "restorations": [
+      "r"
+    ]
+  },
+  {
+    "pattern": "e$",
+    "restorations": [
+      "y",
+      "a",
+      "o",
+      "i",
+      "u"
+    ]
+  },
+  {
+    "pattern": "th$",
+    "restorations": [
+      "t"
+    ]
+  },
+  {
+    "pattern": "ck$",
+    "restorations": [
+      "c"
+    ]
+  },
+  {
+    "pattern": "sh$",
+    "restorations": [
+      "s"
+    ]
+  },
+  {
+    "pattern": "o$",
+    "restorations": [
+      "e",
+      "a",
+      "y",
+      "i",
+      "u"
+    ]
+  },
+  {
+    "pattern": "h$",
+    "restorations": [
+      "hy",
+      "he",
+      "ha",
+      "ho",
+      "hi",
+      "hu"
+    ]
+  },
+  {
+    "pattern": "gn$",
+    "restorations": [
+      "g"
+    ]
+  },
+  {
+    "pattern": "ns$",
+    "restorations": [
+      "n"
+    ]
+  },
+  {
+    "pattern": "tn$",
+    "restorations": [
+      "t"
+    ]
+  },
+  {
+    "pattern": "rt$",
+    "restorations": [
+      "r"
+    ]
+  },
+  {
+    "pattern": "tr$",
+    "restorations": [
+      "t"
+    ]
+  },
+  {
+    "pattern": "mp$",
+    "restorations": [
+      "m"
+    ]
+  },
+  {
+    "pattern": "hn$",
+    "restorations": [
+      "h"
+    ]
+  },
+  {
+    "pattern": "dl$",
+    "restorations": [
+      "d"
+    ]
+  },
+  {
+    "pattern": "nk$",
+    "restorations": [
+      "n"
+    ]
+  },
+  {
+    "pattern": "rd$",
+    "restorations": [
+      "r"
+    ]
+  },
+  {
+    "pattern": "nl$",
+    "restorations": [
+      "n"
+    ]
+  },
+  {
+    "pattern": "mb$",
+    "restorations": [
+      "m"
+    ]
+  },
+  {
+    "pattern": "f$",
+    "restorations": [
+      "p",
+      "fe",
+      "fy",
+      "v",
+      "fi",
+      "fa",
+      "fo"
+    ]
+  },
+  {
+    "pattern": "rk$",
+    "restorations": [
+      "r"
+    ]
+  },
+  {
+    "pattern": "kl$",
+    "restorations": [
+      "k"
+    ]
+  },
+  {
+    "pattern": "rm$",
+    "restorations": [
+      "r"
+    ]
+  },
+  {
+    "pattern": "ch$",
+    "restorations": [
+      "c"
+    ]
+  },
+  {
+    "pattern": "ld$",
+    "restorations": [
+      "l"
+    ]
+  },
+  {
+    "pattern": "lt$",
+    "restorations": [
+      "l"
+    ]
+  },
+  {
+    "pattern": "pl$",
+    "restorations": [
+      "p"
+    ]
+  },
+  {
+    "pattern": "gl$",
+    "restorations": [
+      "g"
+    ]
+  },
+  {
+    "pattern": "y$",
+    "restorations": [
+      "e",
+      "i",
+      "o",
+      "a",
+      "u"
+    ]
+  },
+  {
+    "pattern": "nc$",
+    "restorations": [
+      "n"
+    ]
+  },
+  {
+    "pattern": "bl$",
+    "restorations": [
+      "b"
+    ]
+  },
+  {
+    "pattern": "wn$",
+    "restorations": [
+      "w"
+    ]
+  },
+  {
+    "pattern": "hl$",
+    "restorations": [
+      "h"
+    ]
+  }
+]
