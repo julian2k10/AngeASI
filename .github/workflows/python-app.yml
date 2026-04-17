@@ -34,6 +34,8 @@ jobs:
           use-mamba: true
           # Crucial for caching to work correctly
           auto-activate-base: false
+          # Auto fix encoding/formatting issues:
+          clean-patched-environment-file: true
 
       - name: Verify Environment
         shell: bash -el {0}
