@@ -134,7 +134,7 @@ PRODUCTIVE_SUFFIXES = [
 ]
 
 INVALID_SUFFIXES = [
-    'dful', 'eful', 'efull', 'efully', 'stful', 'tful', "ckings", "cket", "king", "e"
+    'dful', 'eful', 'efull', 'efully', 'stful', 'tful', "ckings", 'cking', "cket", "king", "e"
 ]
 
 SUFFIX_CANDIDATES = [

@@ -1015,81 +1015,6 @@ def decompose_compound_forms(
     return expanded
 
 
-def filter_neo_words(dict_words: Set[str], neo_cf: Set[str], min_root_len=3, min_anchor=3, max_anchor=9) -> List[str]:
-    """Return words that have at least one split where one side is a
-    current combining form (len 3–8 each side).  Filters out native
-    compound words (sun-flower, hand-over, by-product) that have no
-    neoclassical component, dramatically shrinking the scan corpus."""
-    neo: List[str] = []
-    # CF anchor trie (forward) for left-anchor scan
-    valid_cf = [x for x in neo_cf if len(x) >= min_root_len]
-    cf_trie = CompoundLineageTrie(is_suffix_mode=False)
-    cf_trie.insert_all(valid_cf, min_len=min_anchor, max_len=max_anchor)
-
-    # Reversed-CF trie for right-anchor scan
-    rev_cf_trie = CompoundLineageTrie(is_suffix_mode=True)
-    rev_cf_trie.insert_all(valid_cf, min_len=min_anchor, max_len=max_anchor)
-
-    # 1. Extract neoclassical compound words
-    neo_source_words: Set[str] = {w for w in dict_words if len(w) > min_anchor + min_root_len}
-    for w in list(neo_source_words):
-        lo = min_anchor
-        hi = min(len(w) - min_root_len, max_anchor)
-        qualified = False
-        for split in range(lo, hi + 1):
-            if cf_trie.find_exact_prefix(w, 0, split):
-                qualified = True
-                break
-
-            if rev_cf_trie.find_exact_prefix(w, split, len(w)):
-                qualified = True
-                break
-
-        if qualified:
-            neo_source_words.discard(w)
-            neo.append(w)
-
-    print(f"Extracted {len(neo)} neoclassical words using prefix/suffix trie scan.")
-
-    # 2. Extract common neoclassical suffixes
-    neo_suffix_freq = Counter()
-    for w in neo:
-        wlen = len(w)
-        lo = min_anchor
-        hi = min(wlen - min_root_len, max_anchor)
-        for split in range(lo, hi + 1):
-            neo_suffix_freq[w[split:]] += 1
-
-    neo_suffixes = {w for w, freq in neo_suffix_freq.items() if freq >= 10}
-    print(f"Discovered {len(neo_suffixes)} neoclassical suffixes.")
-    neo_suffixes = filter_affixes(neo_suffixes, neo_suffix_freq, is_suffix=True)
-
-    print(f"{len(neo_suffixes)} neoclassical suffixes pass deduplication filters.")
-    rev_cf_trie.insert_all(neo_suffixes)  # Add neo suffixes to trie for quick lookup
-
-    # 3. Select all words from remaining pool that uses a common neoclassical suffix
-    count = 0
-    for w in list(neo_source_words):
-        lo = min_anchor
-        hi = min(len(w) - min_root_len, max_anchor)
-        for split in range(lo, hi + 1):
-            if rev_cf_trie.find_exact_prefix(w, split, len(w)):
-                neo_source_words.discard(w)
-                neo.append(w)
-                count += 1
-                break
-
-    print(f"Extracted {count} neoclassical words using common neo suffix trie scan.")
-    print(f"Found {len(neo)} total neo source words.")
-
-    print(f"Remaining pool size: {len(neo_source_words)}/{len(dict_words)}")
-    if len(neo_suffixes) > 1000:
-        save_json_file(STORAGE_DIR, "eng_neo_suffixes.json", sorted(neo_suffixes))
-        save_json_file(STORAGE_DIR, "eng_neo_words.json", sorted(neo))
-
-    return neo
-
-
 @log_time
 def extract_latin__greek_roots(
         words: Set[str],
@@ -1283,13 +1208,7 @@ def extract_latin__greek_roots(
     # prod_suffixes = extract_productive_affixes(
     #     suffixes, suffix_freq, is_suffix=True, dict_words=words, min_len=min_suffix_len, top_n=250
     # )
-    # TODO - remove invalid combining forms like: "incombusti", "incommo", "incommod", "incommodat", "incommodi",
-    #  "incommunicat", "incompati", "incompl", "incomplet", "incompli", "incomprehensi". While they are Latin setm
-    #  "forms" of words, they do not meet the strict morphological definition of a "combining form" used to bridge
-    #  two distinct word parts.
 
-    # TODO - update the code to ensure longer combining forms like 'metallurg' is also extracted from words like:
-    #  metallurgical/metallurgist/micrometallurgy/hydrometallurgical/etc.
 
     productive_suffixes = frozenset(s for s in suffixes if len(s) >= pattern_a_min_suffix_len)
     sorted_prod_suffixes = sorted(productive_suffixes, key=len, reverse=True)
@@ -1381,8 +1300,6 @@ def extract_latin__greek_roots(
             "is_root": True,
             "examples": sorted(pa_examples.get(root, set()))[:25],
         }
-
-    #neo_words = filter_neo_words()
 
     # ── Pattern B: combining-form + morpheme ─────────────────────
     left_to_rights: Dict[str, set] = defaultdict(set)
@@ -1975,11 +1892,20 @@ def extract_neoclassical_forms(
     t_map = defaultdict(int)
     cv_map = defaultdict(int)
 
-    # Remove compound words to avoid creating fragments like: 'counterc' or 'sunb' from 'sunbathed'
+    # TODO - remove invalid combining forms like: "incombusti", "incommo", "incommod", "incommodat", "incommodi",
+    #  "incommunicat", "incompati", "incompl", "incomplet", "incompli", "incomprehensi". While they are Latin setm
+    #  "forms" of words, they do not meet the strict morphological definition of a "combining form" used to bridge
+    #  two distinct word parts.
+
+    # TODO - update the code to ensure longer combining forms like 'metallurg' is also extracted from words like:
+    #  metallurgical/metallurgist/micrometallurgy/hydrometallurgical/etc.
+
+    # TODO - Remove compound words to avoid creating fragments like: 'counterc' or 'sunb' from 'sunbathed'
     productive_prefix_roots: set[str] = set()
     productive_suffix_roots: set[str] = set()
     for word in sorted_words:
         w_len = len(word)
+        break
 
     # 1. OPTIMIZED SINGLE PASS
     for word in sorted_words:
@@ -2053,12 +1979,14 @@ def extract_neoclassical_forms(
     # print(f"Saving neo forms & t_map freq {len(t_map)} -> {len(total_freq)} in cache: {cache_file}...")
     # save_json_file(CACHE_DIR, cache_file, {"neoclassical_forms": results, "total_freq": total_freq})
 
+    # TODO - use 'cache_key' to ensure prefix/suffix freq was extracted from the same sorted_words
+    #  e.g. f'{cache_key}_prefix_freq.json'
     prefix_freq = load_json_file("eng_prefix_freq.json")
     suffix_freq = load_json_file("eng_suffix_freq.json")
-    vowels = "".join(v_set)
+
     combining_forms = filter_non_maximal_forms(
         set(results.keys()), word_set, prefix_freq, suffix_freq, total_freq,
-        vowels=vowels,
+        vowels="".join(v_set),
     )
 
     return combining_forms, expanded_forms, results, total_freq
@@ -2250,11 +2178,10 @@ def discover_anchor_based_forms(
         if freq == 0:
             continue
 
-        example_words = sorted(source_words)[:10]
-
         if n_partners >= expanded_forms_threshold:
             expanded_forms.add(cand)
         # else:
+        #     example_words = sorted(source_words)[:10]
         #     new_forms[cand] = {
         #         'frequency':       freq,
         #         'anchor_partners': sorted(total_partners),
@@ -2297,6 +2224,218 @@ else:
     cache_files = find_files_by_pattern(CACHE_DIR, "_greek_latin_roots_cache.json")
     if cache_files:
         delete_files_from_list(CACHE_DIR, cache_files)
+
+
+# TODO - Pending removal
+def _extract_morpheme_frequencies(dictionary: Set[str],
+                                  min_len: int = 1,
+                                  max_len: int = 20,
+                                  min_coverage: int = 0.4,
+                                  max_coverage: int = 0.6) -> Tuple[Counter, Counter, Counter, Counter]:
+    """
+    Extract substring frequencies from a dictionary of words.
+    Returns (subword_freq, morpheme_freq, prefix_freq, suffix_freq).
+    """
+    morpheme_freq, subword_freq, prefix_freq, suffix_freq = Counter(), Counter(), Counter(), Counter()
+
+    for word in dictionary:
+        wlen = len(word)
+        prefixes, suffixes, subwords = [], [], []
+        is_compound = False
+        for length in range(min_len, min(wlen, max_len + 1)):
+            coverage = length / wlen
+            if wlen > 6 and min_coverage <= coverage <= max_coverage:
+                prefix = word[:length]
+                suffix = word[length:]
+                prefixes.append(prefix)
+                suffixes.append(word[-length:])
+                if prefix in dictionary and suffix in dictionary:
+                    is_compound = True
+                    break
+            else:
+                prefixes.append(word[:length])
+                suffixes.append(word[-length:])
+
+            for start in range(1, wlen - length):
+                subwords.append(word[start:start + length])
+
+        if not is_compound:  # Only count frequencies of non-compound words
+            prefix_freq.update(prefixes)
+            suffix_freq.update(suffixes)
+            subword_freq.update(subwords)
+
+    # Update morpheme_freq with prefix/suffix counts
+    morpheme_freq.update(prefix_freq)
+    morpheme_freq.update(suffix_freq)
+    subword_freq.update(morpheme_freq)
+
+    return subword_freq, morpheme_freq, prefix_freq, suffix_freq
+
+# TODO - Pending removal
+def extract_bound_roots(affix_freq,
+                        morpheme_freq,
+                        min_root_freq,
+                        desired_root_len,
+                        max_bound_root_len,
+                        minimum_variance,
+                        prod_freq_len_multi,
+                        is_suffix):
+    direction = "suffix" if is_suffix else "prefix"
+    print(f"Extracting {direction} bound roots...")
+    bound_roots = set()
+    affixes = [k for k, v in affix_freq.items() if v >= min_root_freq and len(k) <= max_bound_root_len]
+    sort_func = (lambda x: x[::-1]) if is_suffix else (lambda x: x)
+    affixes.sort(key=sort_func)
+
+    # Create buckets and group affixes
+    groups, bucket = [], []
+    prev_cand = ""
+    for affix in affixes:
+        if prev_cand and len(affix) > len(prev_cand):
+            bucket.append(affix)
+        else:
+            if bucket:
+                groups.append(bucket)
+                bucket = []
+
+            bucket.append(affix)
+
+        prev_cand = affix
+
+    if bucket:  # Add final bucket
+        groups.append(bucket)
+
+    upper_root_limit = min_root_freq * max(2, prod_freq_len_multi)
+    for group in groups:
+        prev_cand = ""
+        prev_freq = 0
+        for affix in sorted(group, key=len, reverse=True):
+            freq = morpheme_freq[affix]
+            if prev_cand:
+                if freq > prev_freq + minimum_variance:
+                    if len(affix) > desired_root_len:
+                        if len(affix) <= max_bound_root_len and freq >= upper_root_limit:
+                            bound_roots.add(affix)
+                            prev_cand = affix
+                            prev_freq = freq
+                    else:
+                        bound_roots.add(affix)
+                        prev_cand = affix
+                        prev_freq = freq
+            else:
+                if len(affix) > desired_root_len:
+                    if len(affix) <= max_bound_root_len and freq >= upper_root_limit:
+                        bound_roots.add(affix)
+                        prev_cand = affix
+                        prev_freq = freq
+                else:
+                    bound_roots.add(affix)
+                    prev_cand = affix
+                    prev_freq = freq
+
+    return bound_roots
+
+
+# TODO - Pending removal
+def extract_productive_roots(
+        lang_code: str,
+        dict_words: Set[str],
+        suffixes: Set[str],
+        prefixes: Set[str],
+        script: str,
+        min_root_freq=4,
+        desired_root_len=6,
+        max_bound_root_len=10,
+        max_free_root_len=15,
+        prod_freq_len_multi=2,
+        is_suffixing=True,  # Language bias
+        combining_forms: Optional[Set[str]] = None,
+        orth_rules: Optional[Any] = None,
+) -> Tuple[Set[str], Set[str], Set[str], Set[str], CounterType, CounterType, CounterType]:
+    """
+    returns (subword_freq, morpheme_freq, prefix_freq, suffix_freq)
+    """
+    print(f"Extracting productive roots...")
+    if not isinstance(dict_words, set):
+        dict_words = set(dict_words)
+
+    if is_suffixing:
+        # Suffixes need higher variance
+        minimum_prefix_variance = 1
+        minimum_suffix_variance = 3
+    else:
+        # Prefixes need higher variance
+        minimum_prefix_variance = 3
+        minimum_suffix_variance = 1
+
+    # 1. Extract frequency tables
+    subword_freq, morpheme_freq, prefix_freq, suffix_freq = _extract_morpheme_frequencies(dict_words)
+
+    # 2. Extract prefix roots
+    prefix_roots = extract_bound_roots(prefix_freq,
+                                       subword_freq,  # Use subword freq to detect bound roots like 'metallurg'
+                                       min_root_freq,
+                                       desired_root_len,
+                                       max_bound_root_len,
+                                       minimum_prefix_variance,
+                                       prod_freq_len_multi,
+                                       is_suffix=False)
+
+    # 3. Extract suffix roots
+    suffix_roots = extract_bound_roots(suffix_freq,
+                                       subword_freq,
+                                       min_root_freq,
+                                       desired_root_len,
+                                       max_bound_root_len,
+                                       minimum_suffix_variance,
+                                       prod_freq_len_multi,
+                                       is_suffix=True)
+
+    # 4. Extract free roots the meet length and frequency requirements
+    print("Extracting free roots...")
+    free_roots = set()
+    for word in dict_words:
+        if len(word) > max_free_root_len:
+            continue
+
+        freq = morpheme_freq.get(word, 0)
+
+        if freq >= min_root_freq * 2:
+            free_roots.add(word)
+        elif len(word) <= desired_root_len and freq >= min_root_freq:
+            # Short words with moderate freq are productive enough as free roots
+            free_roots.add(word)
+
+    print(f"Extracted {len(free_roots)} free roots. "
+          f"{len(prefix_roots)} prefix bound roots & {len(suffix_roots)} suffix bound roots.")
+
+    # Lazy imports to avoid circular dependency at module level
+    if orth_rules is None:
+        from morpho_rules import discover_orth_rules
+        orth_rules = discover_orth_rules(dict_words, suffixes, lang_code=lang_code)
+
+    if combining_forms is None:
+        from latin_greek_root_extractor import extract_latin__greek_roots, normalize_combining_forms
+        roots, srs = extract_latin__greek_roots(dict_words, suffixes, suffix_freq, lang_code=lang_code, script=script)
+        combining_forms = set(roots.keys())
+        # exc_forms = normalize_combining_forms(combining_forms, subword_freq, script=script)
+
+    # 5. Filter 1 letter (diff) duplicates & affixes > 7 char that fragments any free roots.
+    #    Exempt combining forms and roots restorable via morphophonological rules.
+    prefix_roots = _filter_affix_duplicates(
+        prefix_roots, free_roots, is_suffix=False,
+        combining_forms=combining_forms, orth_rules=orth_rules, dictionary=dict_words,
+    )
+    suffix_roots = _filter_affix_duplicates(
+        suffix_roots, free_roots, is_suffix=True,
+        combining_forms=combining_forms, orth_rules=orth_rules, dictionary=dict_words,
+    )
+
+    print(f"After step-5 filters: {len(free_roots)} free roots, "
+          f"{len(prefix_roots)} prefix bound roots & {len(suffix_roots)} suffix bound roots.")
+
+    return free_roots, prefix_roots, suffix_roots, combining_forms, morpheme_freq, prefix_freq, suffix_freq
+
 
 if __name__ == "__main__":
     print(f"SCRIPT_REGISTRY Size: {len(SCRIPT_REGISTRY)}")

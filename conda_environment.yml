@@ -26,7 +26,11 @@ dependencies:
       - torchaudio
       - tensorflow
       - paddlenlp
+      - pymongo
+      - keyring
+      - regex
       - ddgs
+      - iso639
       - blake3
       - easyocr
       - pymupdf

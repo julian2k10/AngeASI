@@ -35,6 +35,7 @@ import sys
 import json
 import time
 import shutil
+import torch
 import regex as re
 import numpy as np
 import unicodedata
@@ -46,11 +47,10 @@ from typing import (
 from collections import Counter, defaultdict, OrderedDict, deque
 
 from context_aware_io import save_json_file, load_json_file
-from latin_greek_root_extractor import _build_corpus_profile, get_combining_vowels
+from latin_greek_root_extractor import _build_corpus_profile, get_combining_vowels, extract_productive_roots
 from morph_segmenter_ica import MorphSegmenterICA, get_language_family
 from morpheme_extractor import extract_productive_affixes
 from morpho_rules import CompiledRules
-from root_extractor import extract_productive_roots
 from copy import deepcopy
 import logging
 import math
@@ -1953,20 +1953,18 @@ class ModelArgs:
     vocab_size, pad_token_id, bos_token_id, eos_token_id = 1000, -1, -1, -1
     word_embed_dim, embed_dim, ffn_dim, n_layer, n_heads, max_seq_len = 8192, 512, 2048, 8, 8, 64
     dropout, weight_decay, clm_lr, base_lr, min_lr = 0.3, 1e-2, 8e-5, 1e-3, 1e-6
-    embed_group_size, embed_device = 10, None
     num_sensitivity_levels, num_languages, num_tasks = 3, 7, 12
-    device = None
-    dtype = None
+    embed_group_size, embed_device = 10, None
+    device, dtype = None, None
     weights: Dict[str, float] = {}
     db_path: str = "vector_db"
     expert_dim, expert_ffn_dim = 128, 256
     adaptive_softmax_cutoffs: Optional[List[int]] = None
 
     def __init__(self, **kwargs):
-        if HAS_TORCH:
-            self.dtype = torch.float32
-            self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-            self.embed_device = self.device
+        self.dtype = kwargs.get("dtype", torch.float32)
+        self.device = kwargs.get("device", torch.device("cuda" if torch.cuda.is_available() else "cpu"))
+        self.embed_device = self.device
         for k, v in kwargs.items():
             setattr(self, k, v)
 

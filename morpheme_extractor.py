@@ -56,16 +56,15 @@ Key design decisions:
 
 from __future__ import annotations
 
+import csv
 import os
 import re
 import sys
 import json
 import math
 from collections import Counter, defaultdict
-from typing import Counter as CounterType, FrozenSet, Optional, Set, List, Tuple, Dict, Iterable
+from typing import Counter as CounterType, FrozenSet, Optional, Set, List, Tuple, Dict, Iterable, Any
 import logging
-
-from context_aware_io import load_json_file
 
 logging.basicConfig(
     format="%(asctime)s | %(levelname)s | %(name)s | %(message)s",
@@ -487,7 +486,7 @@ def _extract_testing_data(dict_words: Set[str]=None,
                           affix_candidates: List[str]=None,
                           lang_code="eng",
                           is_suffix=False):
-
+    from context_aware_io import load_json_file
     dict_words = dict_words or load_json_file(os.path.join(STORAGE_DIR, f"{lang_code}_{DICT_WORDS}"))
     prefixes, suffixes, pre_freq, suf_freq = run_morpheme_pipeline(dict_words)
     freq = suf_freq if is_suffix else pre_freq
@@ -817,6 +816,124 @@ def _dict_stem_ratio(
         if stem in dict_words:
             hits += 1
     return hits / total if total > 0 else 0.0
+
+
+def _filter_affix_duplicates(
+        affixes: Set[str],
+        free_roots_set: Set[str],
+        *,
+        is_suffix: bool = False,
+        max_affix_len: int = 3,
+        combining_forms: Optional[Set[str]] = None,
+        orth_rules: Optional[Any] = None,
+        dictionary: Optional[Set[str]] = None,
+) -> Set[str]:
+    """Remove affixes that are exactly one character longer than a known free root.
+
+    For **prefix** roots (``is_suffix=False``, the default) the extra character is on
+    the **right**: strip ``affix[:-1]`` and check whether that stem is a free root.
+
+        "counterp", "counterf", "countermar"  →  stem "counter" ∈ free_roots  →  removed
+
+    For **suffix** roots (``is_suffix=True``) the extra character is on the **left**:
+    strip ``affix[1:]`` and check whether that stem is a free root.
+
+        e.g. "calization"  →  "zation" if "zation" ∈ free_roots, "calization" would be removed
+
+    **Exemptions** — an affix is NOT removed even if its stem is a free root when:
+
+    1. The affix is itself a known combining form (e.g. "metallurg" should not
+       be removed just because "metal" is a free root).
+    2. The affix can be restored to a dictionary word or combining form via a
+       morphophonological rule (vowel drop, gemination reversal, etc.).
+       e.g. "programm" → "program" via gemination reversal.
+
+    Uses a :class:`~collections.defaultdict` for O(1) stem-to-affix grouping, so the
+    total work is O(|affixes|) dictionary lookups rather than a nested loop.
+
+    Parameters
+    ----------
+    affixes:
+        Candidate bound-root set — either prefix roots or suffix roots.
+    free_roots_set:
+        Set of known free roots for O(1) membership testing.
+    is_suffix:
+        When ``True``, strip the **leftmost** character (suffix direction).
+        When ``False`` (default), strip the **rightmost** character (prefix direction).
+    max_affix_len:
+        Only examine affixes greater than this length.
+    orth_rules:
+        Compiled morphophonological rules.  If provided, affixes restorable to a
+        dictionary word or combining form via any rule are exempt from removal.
+    dictionary:
+        Dictionary words for rule-based restoration lookup.
+
+    Returns
+    -------
+    Filtered set of affixes with one-letter-diff duplicates removed.
+    """
+    # Lazy import to avoid circular dependency at module level
+    from morpho_rules import apply_rules as _apply_rules
+
+    # Strip from the right for prefixes, from the left for suffixes
+    get_stem = (lambda affix, idx: affix[idx:]) if is_suffix else (lambda affix, idx: affix[:-idx])
+    direction = "suffix" if is_suffix else "prefix"
+    affixes = set(affixes)
+
+    if combining_forms is None:
+        combining_forms = set()
+    if dictionary is None:
+        dictionary = set()
+
+    # Build the set of exempt affixes:
+    # 1. Affixes that are combining forms
+    # 2. Affixes restorable to a known word/form via morphological rules
+    exempt = set()
+    for affix in affixes:
+        # Exemption 1: affix is a known combining form
+        if affix in combining_forms:
+            exempt.add(affix)
+            continue
+
+        # Exemption 2: affix can be restored via morphophonological rules
+        if orth_rules is not None and len(affix) >= 3:
+            candidates = _apply_rules(affix, orth_rules)
+            for candidate in candidates:
+                if candidate != affix and (
+                    candidate in dictionary
+                    or candidate in combining_forms
+                    or candidate in free_roots_set
+                ):
+                    exempt.add(affix)
+                    break
+
+    # Group affixes by their stem
+    stem_to_affixes: Dict[str, Set[str]] = defaultdict(set)
+    for affix in affixes:
+        if affix in exempt:
+            continue  # Skip exempt affixes — don't even group them for removal
+        if len(affix) > max_affix_len:
+            diff = min(4, len(affix) - max_affix_len)
+            if max_affix_len < 7 and len(affix) < 7:  # Only check 1 character difference
+                stem_to_affixes[get_stem(affix, 1)].add(affix)
+            else:  # Ensure bounds roots are not fragments of compound words like 'prenegl' from 'preneglect'
+                for x in range(1, diff + 1):
+                    stem_to_affixes[get_stem(affix, x)].add(affix)
+
+    # Any affix whose stem is a free root is a duplicate
+    n_removed = 0
+    for stem, affix_group in stem_to_affixes.items():
+        if stem in free_roots_set:
+            affixes.difference_update(affix_group)
+            n_removed += len(affix_group)
+
+    size = len(affixes)
+    affixes.difference_update(free_roots_set)  # Remove free roots
+    n_removed += size - len(affixes)
+    if n_removed > 0:
+        print(f"    Removed {n_removed} {direction} roots that are extensions of free roots "
+              f"(exempted {len(exempt)} combining-form / restorable roots).")
+    return affixes
 
 
 def filter_affixes(
@@ -1563,6 +1680,85 @@ def get_affixes_and_frequencies(dict_words, min_len=1, max_len=10):
         save_json_file(STORAGE_DIR, suffix_freq_file, dict(suffix_freq))
 
     return prefixes, suffixes, prefix_freq, suffix_freq
+
+
+# ── Export / analysis helpers ────────────────────────────────────────────
+
+def export_roots_csv(
+        roots: Dict[str, Dict[str, Any]],
+        output_path: str,
+        min_pct: float = 0.0,
+        sort_by: str = "frequency",
+) -> None:
+    """Write roots to CSV."""
+    filtered = {k: v for k, v in roots.items()
+                if v["combining_vowel_percentage"] >= min_pct}
+    key_fn = ((lambda kv: kv[1]["frequency"]) if sort_by == "frequency"
+              else (lambda kv: kv[1]["combining_vowel_percentage"]))
+    rows = sorted(filtered.items(), key=key_fn, reverse=True)
+
+    with open(output_path, "w", newline="", encoding="utf-8") as fh:
+        w = csv.writer(fh)
+        w.writerow(["Root", "Pattern", "Frequency", "CV/Standalone",
+                    "Ratio", "Diversity", "Examples"])
+        for root, st in rows:
+            w.writerow([root, st.get("pattern", "?"), st["frequency"],
+                        st["combining_vowel_count"],
+                        f"{st['combining_vowel_percentage']:.1%}",
+                        st.get("continuation_diversity", ""),
+                        "; ".join(st.get("examples", []))])
+    print(f"  Exported {len(rows)} roots -> {output_path}")
+
+
+def _compute_lang_bias(self,
+                       prefix_freq: CounterType,
+                       suffix_freq: CounterType,
+                       prefixes: Set[str],
+                       suffixes: Set[str],
+                       dict_size: int) -> str:
+    """
+    Determine language bias (suffixing vs prefixing).
+    """
+
+    if dict_size < 100:
+        suffix_hits = sum(v for k, v in suffix_freq.items())
+        prefix_hits = sum(v for k, v in prefix_freq.items())
+        suffix_dict_stems = sum(
+            1 for s in suffixes
+            for stem in self.suffix_stems.get(s, set())
+            if stem in self.word_set
+        )
+        prefix_dict_stems = sum(
+            1 for p in prefixes
+            for stem in self.prefix_stems.get(p, set())
+            if stem in self.word_set
+        )
+
+        suffix_score = suffix_hits + suffix_dict_stems * 2
+        prefix_score = prefix_hits + prefix_dict_stems * 2
+
+        return "suffixing" if suffix_score >= prefix_score else "prefixing"
+
+    if suffixes:
+        suffix_productivity = sum(
+            len(self.suffix_stems.get(a, set()))
+            for a in suffixes
+        ) / len(suffixes)
+    else:
+        suffix_productivity = 0.0
+
+    if prefixes:
+        prefix_productivity = sum(
+            len(self.prefix_stems.get(a, set()))
+            for a in prefixes
+        ) / len(prefixes)
+    else:
+        prefix_productivity = 0.0
+
+    if suffix_productivity >= prefix_productivity:
+        return "suffixing"
+    else:
+        return "prefixing"
 
 
 if __name__ == "__main__":
